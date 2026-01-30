@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shitter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f1419 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <p id="info"></p>
+    <button id="getinfo">get timestamp</button>
+
+    <script>
+        async function invoke(cmd, args = {}) {
+            return await window.__TAURI__.core.invoke(cmd, args);
+        }
+
+        const info = document.getElementById('info');
+        const getinfo = document.getElementById('getinfo');
+
+        getinfo.addEventListener('click', async () => {
+            const timestamp = await invoke('get_info', { infoType: 'timestamp' });
+            info.textContent = timestamp;
+        });
+    </script>
+</body>
+</html>
